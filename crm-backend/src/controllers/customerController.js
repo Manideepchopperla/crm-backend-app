@@ -25,7 +25,18 @@ module.exports = {
   getCustomers: async (req, res) => {
     try {
       // Retrieve all customers associated with the authenticated user
-      const customers = await Customer.findAll({ where: { userId: req.user.id } });
+      const customers = await Customer.findAll({});
+      res.status(200).json(customers);
+    } catch (error) {
+      res.status(500).json({ error: 'Error fetching customers.', details: error.message });
+    }
+  },
+
+  // Get customers By id
+  getCustomerById: async (req, res) => {
+    try {
+      // Retrieve all customers associated with the authenticated user
+      const customers = await Customer.findAll({ where: { id: req.params.id } });
       res.status(200).json(customers);
     } catch (error) {
       res.status(500).json({ error: 'Error fetching customers.', details: error.message });
